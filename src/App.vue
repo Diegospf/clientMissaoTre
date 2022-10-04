@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <NavBar @mudarTipo="mudarTipo($event)"/>
-    <TableMenu :msg= this.tipo></TableMenu>
+    <TableMenu :msg= this.tipo @pesquisar="pesquisar($event)" @tipoPesquisa="tipoPesquisa($event)"></TableMenu>
+    <h1>{{this.pesquisaSelecionado}} e {{this.pesquisaSelecionadoTipo}}</h1>
   </div>
 </template>
 
@@ -14,7 +15,8 @@ export default {
   name: 'App',
   data () {
     return {
-      info: null,
+      pesquisaSelecionado: "teste",
+      pesquisaSelecionadoTipo: "x",
       tipo: "Zona"
     }
   },
@@ -25,7 +27,13 @@ export default {
 methods: {
    mudarTipo (tipo) {
      this.tipo = tipo;
-   }
+   },
+   pesquisar(selecionado) {
+      this.pesquisaSelecionado = selecionado;
+  },
+  tipoPesquisa(selecionadoTipo) {
+      this.pesquisaSelecionadoTipo = selecionadoTipo;
+  }
 },
   mounted(){
     axios
