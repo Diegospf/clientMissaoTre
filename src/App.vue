@@ -2,7 +2,7 @@
   <div id="app">
     <NavBar @mudarTipo="mudarTipo($event)"/>
     <TableMenu :msg= this.tipo @pesquisar="pesquisar($event)" @tipoPesquisa="tipoPesquisa($event)"></TableMenu>
-    <h1>{{this.pesquisaSelecionado}} e {{this.pesquisaSelecionadoTipo}}</h1>
+    <TableComponent :json= this.json :tipo= this.pesquisaSelecionadoTipo :alterado= this.alterado></TableComponent>
   </div>
 </template>
 
@@ -10,38 +10,55 @@
 import axios from 'axios'
 import NavBar from './components/NavBar'
 import TableMenu from './components/TableMenu'
+import TableComponent from './components/TableComponent'
 
 export default {
   name: 'App',
   data () {
     return {
-      pesquisaSelecionado: "teste",
+      pesquisaSelecionado: "y",
       pesquisaSelecionadoTipo: "x",
-      tipo: "Zona"
+      tipo: "Zona",
+      alterado: true,
+      info:'http://localhost:8082/search/polo/',
+      json: null
     }
   },
   components: {
     NavBar,
-    TableMenu
+    TableMenu,
+    TableComponent
 },
-methods: {
-   mudarTipo (tipo) {
-     this.tipo = tipo;
-   },
-   pesquisar(selecionado) {
-      this.pesquisaSelecionado = selecionado;
-  },
-  tipoPesquisa(selecionadoTipo) {
-      this.pesquisaSelecionadoTipo = selecionadoTipo;
+  methods: {
+    mudarTipo (tipo) {
+      this.tipo = tipo;
+      this.alterado = true;
+      this.json = '';
+    },
+    pesquisar(selecionado) {
+        this.pesquisaSelecionado = selecionado;
+    },
+    tipoPesquisa(selecionadoTipo) {
+        this.pesquisaSelecionadoTipo = selecionadoTipo;
+        this.alterado = false;
+        this.requestApi()
+    },
+    requestApi(){
+      var tipo
+      if(this.tipo == "Zona")
+        tipo = "zona"
+      if(this.tipo == "Polo")
+        tipo = "polo"
+      if(this.tipo == "Município")
+        tipo = "municipio"
+      this.info = 'http://localhost:8082/search/' + tipo + '/' + this.pesquisaSelecionadoTipo + '/' + this.pesquisaSelecionado;
+      axios
+        .get(this.info)
+        .then(response => (this.json = response.data))
+        .catch(error => console.log(error))
+    }
   }
-},
-  mounted(){
-    axios
-      .get('http://localhost:8082/search/polo/1')
-      .then(response => (this.info = response.data))
-      .catch(error => console.log(error))
   }
-}
 </script>
 
 <style>

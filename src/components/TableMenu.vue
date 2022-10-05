@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="container m-2">
+        <div class="mx-4">
             <div class="card mb-3 col-md-8 col-lg-5">
               <div class="card-header d-flex justify-content-between">
                 <div>Consultar por {{msg}}: </div>
@@ -30,7 +30,7 @@
                       <option value="none" selected disabled hidden>Selecione o resultado que espera</option>
                       <option value="todos">Informações completas</option>
                       <option value="sede">Municipio Sede</option>
-                      <option value="municipios">Todos os municípios</option>
+                      <option value="municipio">Todos os municípios</option>
                       <option value="secoes">Quantidade de Seções</option>
                     </select>
                     <select v-if="msg=='Município'" v-model="selecionadoTipo" class="mt-0 form-select form-select-sm form-control" name="stockType" aria-label="Default select example rounded-3">
@@ -69,7 +69,6 @@
                 todosPolos: null,
                 selecionado: null,
                 selecionadoTipo: null,
-                teste: "teste"
             }
         },
         methods:{
