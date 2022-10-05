@@ -31,7 +31,7 @@
                       <option value="todos">Informações completas</option>
                       <option value="sede">Municipio Sede</option>
                       <option value="municipio">Todos os municípios</option>
-                      <option value="secoes">Quantidade de Seções</option>
+                      <option value="secao">Quantidade de Seções</option>
                     </select>
                     <select v-if="msg=='Município'" v-model="selecionadoTipo" class="mt-0 form-select form-select-sm form-control" name="stockType" aria-label="Default select example rounded-3">
                       <option value="none" selected disabled hidden>Selecione o resultado que espera</option>
